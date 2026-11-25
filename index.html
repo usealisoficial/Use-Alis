@@ -389,6 +389,23 @@ footer .pay svg{flex:none;width:1.75rem;height:1.75rem;padding:.3rem;border-radi
 .promo a{color:inherit;text-underline-offset:3px}
 .promoX{position:absolute;right:.4rem;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:2rem;height:2rem;padding:0;border:0;background:transparent;color:inherit;font-size:1.3rem;cursor:pointer}
 
+/* Compartilhar */
+.shareBtn svg{width:1.1rem;height:1.1rem;flex:none}
+.sShare{top:.7rem;left:.7rem}
+.sFrom{margin:0 0 .3rem;padding:.55rem .8rem;border-radius:12px;background:rgba(201,164,106,.2);border:1px solid rgba(201,164,106,.6);font-size:.9rem}
+.sFrom[hidden],.sharedBar[hidden],.introFrom[hidden],.shHint[hidden],.shNative[hidden]{display:none}
+.sharedBar{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-top:.8rem;padding:.7rem .9rem;border-radius:12px;background:rgba(201,164,106,.2);border:1px solid rgba(201,164,106,.6)}
+.sharedBar p{margin:0;font-size:.92rem}
+.sharedBar .chip{flex:none}
+.introFrom{margin:0;color:var(--gold);font-weight:600}
+.shField{display:grid;gap:.3rem;font-size:.9rem;font-weight:600}
+.shField input,.shLink input{width:100%;min-width:0;font:inherit;font-size:16px;font-weight:400;padding:.65rem .9rem;border-radius:12px;border:1px solid rgba(125,90,43,.55);background:#fff;color:var(--ink)}
+.shLink{display:flex;gap:.5rem}
+.shLink input{font-size:.85rem;color:var(--mocha)}
+.shLink .chip{flex:none;padding:.5rem 1rem}
+.shHint{margin:0;font-size:.85rem;color:var(--mocha)}
+.shNative{margin:0}
+
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -400,6 +417,7 @@ footer .pay svg{flex:none;width:1.75rem;height:1.75rem;padding:.3rem;border-radi
     <h1 class="introTag" id="introTitle">Quem somos</h1>
     <p class="aboutText" id="aboutText">Somos a <span class="brandName"></span>, semijoias para brilhar no dia a dia, com acabamento cuidadoso e atendimento feito de pertinho.</p>
     <p class="aboutStory">A <span class="brandName"></span> nasceu do sonho da Alexia, de 23 anos, de se tornar empreendedora. Cada peça do catálogo é um passo dessa história, e você acompanha tudo de perto: é só chamar no WhatsApp ou no Instagram.</p>
+    <p class="introFrom" id="introFrom" hidden></p>
     <button class="cta" id="enter" type="button">Ver o catálogo</button>
     <p class="hint">Ou clique em qualquer lugar da tela.</p>
   </div>
@@ -417,7 +435,7 @@ footer .pay svg{flex:none;width:1.75rem;height:1.75rem;padding:.3rem;border-radi
         <!-- logo.png fica na mesma pasta do index.html -->
         <img alt="" data-logo width="700" height="727">
       </a>
-      <nav aria-label="Principal"><button type="button" id="reopen">Quem somos</button><a href="#catalogo">Catálogo</a><button type="button" class="cartBtn" data-open-cart aria-label="Carrinho"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="cartLabel">Carrinho</span><span class="badge" data-cart-count hidden>0</span></button></nav>
+      <nav aria-label="Principal"><button type="button" id="reopen">Quem somos</button><a href="#catalogo">Catálogo</a><button type="button" class="cartBtn shareBtn" data-open-share aria-label="Compartilhar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg><span class="cartLabel">Compartilhar</span></button><button type="button" class="cartBtn" data-open-cart aria-label="Carrinho"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="cartLabel">Carrinho</span><span class="badge" data-cart-count hidden>0</span></button></nav>
     </div>
     <div class="hero" id="hero">
       <div class="heroArt" aria-hidden="true">
@@ -471,6 +489,10 @@ footer .pay svg{flex:none;width:1.75rem;height:1.75rem;padding:.3rem;border-radi
       </div>
       <div class="chips" id="chips" role="group" aria-label="Filtrar por categoria"></div>
     </div>
+    <div class="sharedBar" id="sharedBar" hidden>
+      <p id="sharedText"></p>
+      <button class="chip" id="sharedAll" type="button">Ver catálogo completo</button>
+    </div>
     <div class="meta">
       <p class="count" id="count" aria-live="polite"></p>
       <div class="dens" role="group" aria-label="Peças por linha">
@@ -521,12 +543,14 @@ footer .pay svg{flex:none;width:1.75rem;height:1.75rem;padding:.3rem;border-radi
   <div class="sMedia" id="sMedia">
     <span id="sImg" style="display:contents"></span>
     <button class="sBtn sClose" id="sClose" type="button" aria-label="Fechar"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <button class="sBtn sShare" id="sShare" type="button" aria-label="Compartilhar esta peça"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg></button>
     <button class="sBtn sPrev" id="sPrev" type="button" aria-label="Peça anterior"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></button>
     <button class="sBtn sNext" id="sNext" type="button" aria-label="Próxima peça"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button>
     <span class="sPos" id="sPos"></span>
   </div>
   <div class="sThumbs" id="sThumbs" hidden aria-label="Fotos da peça"></div>
   <div class="sInfo">
+    <p class="sFrom" id="sFrom" hidden></p>
     <span class="tagBadge sTag" id="sTag" hidden></span>
     <span class="sCat" id="sCat"></span>
     <h3 class="sName" id="sName"></h3>
@@ -581,6 +605,33 @@ footer .pay svg{flex:none;width:1.75rem;height:1.75rem;padding:.3rem;border-radi
   </div>
 </dialog>
 
+<dialog class="sheet share" id="share" aria-labelledby="shareTitle">
+  <div class="cHead">
+    <h3 id="shareTitle">Compartilhar</h3>
+    <button class="sBtn cClose" id="shareClose" type="button" aria-label="Fechar"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <div class="cBody">
+    <fieldset class="cPay">
+      <legend>O que você quer compartilhar?</legend>
+      <div class="payOpts" id="shareWhat"></div>
+    </fieldset>
+    <label class="shField">Seu nome (opcional)
+      <input id="shareName" type="text" maxlength="30" autocomplete="given-name" placeholder="Ex.: Alexia">
+    </label>
+    <label class="shField">Recado (opcional)
+      <input id="shareNote" type="text" maxlength="100" placeholder="Ex.: olha esse brinco, é a sua cara!">
+    </label>
+    <div class="shLink">
+      <input id="shareUrl" type="text" readonly aria-label="Link para compartilhar" onfocus="this.select()">
+      <button class="chip" id="shareCopy" type="button">Copiar</button>
+    </div>
+    <p class="shHint" id="shareLocal" hidden>Atenção: o link só aparece depois que o site for publicado na internet. Até lá, o recado vai sem link. Quando tiver o endereço, preencha "endereco" no começo do script.</p>
+    <a class="sAsk" id="shareWa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg> Enviar no WhatsApp</a>
+    <button class="sCart shNative" id="shareNative" type="button" hidden>Mais opções (Instagram e outros apps)</button>
+    <p class="shHint">No Instagram: copie o link e cole numa conversa, nos stories (adesivo de link) ou na bio.</p>
+  </div>
+</dialog>
+
 <div class="snack" id="snack" role="status" aria-live="polite"><span id="snackText"></span><button type="button" id="snackGo">Ver carrinho</button></div>
 
 <div class="toast" id="toast" role="status" hidden>
@@ -606,6 +657,7 @@ footer .pay svg{flex:none;width:1.75rem;height:1.75rem;padding:.3rem;border-radi
         <li><a href="#catalogo">Catálogo</a></li>
         <li><a href="#catalogo" id="footAbout">Quem somos</a></li>
         <li><a href="#faq">Perguntas frequentes</a></li>
+        <li><a href="#" data-open-share>Compartilhar o catálogo</a></li>
       </ul>
     </nav>
     <div>
@@ -643,13 +695,19 @@ footer .pay svg{flex:none;width:1.75rem;height:1.75rem;padding:.3rem;border-radi
 const CONFIG = {
   brand: "Use Alis",                  // nome da marca
   whatsapp: "5521994495491",         // DDI + DDD + número, só dígitos
-  siteUrl: location.href.split("#")[0],
+  // Endereço final do site, ex.: "https://usealis.com.br". Vai nos links de compartilhamento e nas mensagens do WhatsApp.
+  // Enquanto estiver vazio, usa o endereço da página aberta (que só serve depois de publicado).
+  endereco: "",
   // Faixa de promoção no topo do site. Para ligar: ativa: true e escreva o texto (link é opcional).
   promo: { ativa: false, texto: "Promoção da semana: confira as peças com preço especial!", link: "" },
   // Contagem de visitas e cliques (opcional, deixe vazio para desligar).
   // plausible: domínio do site, ex. "usealis.com.br" (não usa cookies). ga4: ID do Google Analytics, ex. "G-XXXXXXXXXX".
   analytics: { plausible: "", ga4: "" }
 };
+// Só aceita endereço de verdade (http/https). Em pré-visualização ("about:srcdoc") ou arquivo no computador (file://) fica vazio,
+// e o link simplesmente não é incluído nas mensagens, em vez de sair um endereço quebrado.
+CONFIG.siteUrl = (/^https?:\/\//i.test(CONFIG.endereco) ? CONFIG.endereco : /^https?:/i.test(location.href) ? location.href : "")
+  .split("#")[0].split("?")[0];
 
 // Para cada peça: id, nome, categoria, preço (ou null para ocultar) e imagem (ou null)
 // Campos opcionais:
@@ -684,6 +742,7 @@ const SPECIAL = {
   __top: { label: "★ Mais pedidas", test: (p) => tagIs(p, "mais pedida") },
   __sale: { label: "% Promoção", test: onSale }
 };
+const sharedIds = new Set(); // peças de uma lista recebida por link compartilhado
 
 const $ = (s) => document.querySelector(s);
 const isOut = (p) => p?.esgotado === true;
@@ -767,7 +826,7 @@ const grid = $("#grid"), chipsEl = $("#chips"), tools = $("#tools"), sheet = $("
 function filtered() {
   const q = state.query.trim().toLowerCase();
   const all = PIECES.filter((p) =>
-    (state.category === "Todas" || (state.category === "__fav" ? favs.has(p.id) : SPECIAL[state.category] ? SPECIAL[state.category].test(p) : p.category === state.category)) &&
+    (state.category === "Todas" || (state.category === "__fav" ? favs.has(p.id) : state.category === "__shared" ? sharedIds.has(p.id) : SPECIAL[state.category] ? SPECIAL[state.category].test(p) : p.category === state.category)) &&
     (!q || `${p.name} ${p.category} ${p.id} ${p.desc ?? ""} ${p.tag ?? ""}`.toLowerCase().includes(q))
   );
   if (state.sort === "asc") all.sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
@@ -800,6 +859,7 @@ function render() {
   grid.dataset.cols = state.cols;
   grid.innerHTML = list.map(cardHTML).join("");
   $("#empty").hidden = view.length > 0;
+  $("#sharedBar").hidden = state.category !== "__shared";
   $("#count").textContent = view.length ? `${view.length} ${view.length === 1 ? "peça" : "peças"}` : "";
   $("#moreBox").hidden = list.length >= view.length;
   $("#moreInfo").textContent = `Mostrando ${list.length} de ${view.length}`;
@@ -813,7 +873,7 @@ function renderChips() {
     `<button type="button" class="chip" data-cat="${esc(v)}" aria-pressed="${v === state.category}">${esc(label)}<small>${count}</small></button>`;
   const x = chipsEl.scrollLeft;
   const specials = Object.entries(SPECIAL).map(([k, s]) => { const c = PIECES.filter(s.test).length; return c ? chip(k, s.label, c) : ""; }).join("");
-  chipsEl.innerHTML = chip("Todas", "Todas", n("Todas")) + specials + cats.slice(1).map((c) => chip(c, c, n(c))).join("") +
+  chipsEl.innerHTML = chip("Todas", "Todas", n("Todas")) + (sharedIds.size ? chip("__shared", "🎁 Lista compartilhada", sharedIds.size) : "") + specials + cats.slice(1).map((c) => chip(c, c, n(c))).join("") +
     (favs.size || state.category === "__fav" ? chip("__fav", "♥ Favoritas", favs.size) : "");
   chipsEl.scrollLeft = x;
 }
@@ -873,6 +933,7 @@ function showPiece(i) {
   cur = (i + view.length) % view.length;
   const p = view[cur];
   ph = 0; paintPhoto(p);
+  $("#sFrom").hidden = true;
   const tg = badgeText(p);
   $("#sTag").hidden = !tg; $("#sTag").textContent = tg;
   $("#sDesc").hidden = !p.desc; $("#sDesc").textContent = p.desc ?? "";
@@ -1302,6 +1363,128 @@ $("#qStage").addEventListener("click", (e) => {
   }
 });
 
+/* ---------- compartilhar ---------- */
+const shareDlg = $("#share");
+let shareWhat = "site", shareCtxPiece = null;
+const cleanTxt = (s, n) => String(s ?? "").replace(/\s+/g, " ").trim().slice(0, n);
+const shareIds = (k) => (k === "favs" ? [...favs] : [...cart.keys()]).filter((id) => byId(id)).slice(0, 40);
+
+function shareOptions() {
+  const o = [{ k: "site", l: "O catálogo todo" }];
+  if (shareCtxPiece) o.unshift({ k: "peca", l: "Esta peça" });
+  if (favs.size) o.push({ k: "favs", l: `Minhas favoritas (${favs.size})` });
+  if (cart.size) o.push({ k: "cart", l: `Meu carrinho (${cart.size})` });
+  return o;
+}
+// o link leva o que está sendo compartilhado (?peca= ou ?lista=), o nome (?de=) e o recado (?m=)
+function shareLink() {
+  const u = new URLSearchParams();
+  if (shareWhat === "peca" && shareCtxPiece) u.set("peca", shareCtxPiece.id);
+  else if (shareWhat === "favs" || shareWhat === "cart") u.set("lista", shareIds(shareWhat).join(","));
+  const name = cleanTxt($("#shareName").value, 30), note = cleanTxt($("#shareNote").value, 100);
+  if (name) u.set("de", name);
+  if (note) u.set("m", note);
+  const qs = u.toString().replace(/%2C/gi, ",");
+  return CONFIG.siteUrl ? CONFIG.siteUrl + (qs ? "?" + qs : "") : "";
+}
+function shareText(url) {
+  const brand = CONFIG.brand;
+  let head;
+  if (shareWhat === "peca" && shareCtxPiece) {
+    const p = shareCtxPiece;
+    head = `Olha essa peça da ${brand}: *${p.name}*${p.price != null ? " - " + money.format(p.price) : ""}`;
+  } else if (shareWhat === "favs" || shareWhat === "cart") {
+    const ps = shareIds(shareWhat).map(byId);
+    head = `Separei ${ps.length === 1 ? "esta peça" : ps.length + " peças"} da ${brand} para você olhar:\n` +
+      ps.slice(0, 6).map((p) => `• ${p.name}`).join("\n") + (ps.length > 6 ? `\ne mais ${ps.length - 6}` : "");
+  } else head = `Olha o catálogo de semijoias da ${brand}! ✨`;
+  const note = cleanTxt($("#shareNote").value, 100);
+  return [head, note, url].filter(Boolean).join("\n\n");
+}
+function updateShareLink() {
+  const url = shareLink();
+  $("#shareUrl").value = url;
+  $("#shareWa").href = `https://wa.me/?text=${encodeURIComponent(shareText(url))}`;
+}
+function paintShare() {
+  const opts = shareOptions();
+  if (!opts.some((o) => o.k === shareWhat)) shareWhat = opts[0].k;
+  $("#shareWhat").innerHTML = opts.map((o) =>
+    `<label class="payOpt"><input type="radio" name="shareWhat" value="${o.k}"${o.k === shareWhat ? " checked" : ""}><span>${esc(o.l)}</span></label>`).join("");
+  $("#shareLocal").hidden = !!CONFIG.siteUrl;
+  $("#shareNative").hidden = !navigator.share;
+  updateShareLink();
+}
+function openShare(piece = null) {
+  shareCtxPiece = piece;
+  shareWhat = piece ? "peca" : "site";
+  $("#shareName").value = store.get("ua_name", "") || "";
+  $("#shareNote").value = "";
+  paintShare();
+  $("#shareCopy").textContent = "Copiar";
+  if (!shareDlg.open) { shareDlg.showModal(); document.body.classList.add("noscroll"); }
+}
+shareDlg.addEventListener("close", () => {
+  if (!sheet.open && !cartDlg.open && !quiz.open) document.body.classList.remove("noscroll");
+});
+shareDlg.addEventListener("click", (e) => { if (e.target === shareDlg) shareDlg.close(); });
+$("#shareClose").addEventListener("click", () => shareDlg.close());
+$("#shareWhat").addEventListener("change", (e) => { shareWhat = e.target.value; updateShareLink(); });
+$("#shareName").addEventListener("input", (e) => { store.set("ua_name", cleanTxt(e.target.value, 30)); updateShareLink(); });
+$("#shareNote").addEventListener("input", updateShareLink);
+$("#shareCopy").addEventListener("click", async (e) => {
+  const b = e.currentTarget, inp = $("#shareUrl");
+  if (!inp.value) return;
+  try { await navigator.clipboard.writeText(inp.value); }
+  catch { inp.select(); try { document.execCommand("copy"); } catch {} }
+  b.textContent = "Copiado ✓";
+  setTimeout(() => { b.textContent = "Copiar"; }, 1800);
+  track("Compartilhar", { como: "copiar", tipo: shareWhat });
+});
+$("#shareWa").addEventListener("click", () => { updateShareLink(); track("Compartilhar", { como: "whatsapp", tipo: shareWhat }); });
+$("#shareNative").addEventListener("click", () => {
+  navigator.share({ title: CONFIG.brand, text: shareText(""), url: $("#shareUrl").value }).catch(() => {});
+  track("Compartilhar", { como: "celular", tipo: shareWhat });
+});
+document.querySelectorAll("[data-open-share]").forEach((b) => b.addEventListener("click", (e) => { e.preventDefault(); openShare(); }));
+$("#sShare").addEventListener("click", () => openShare(view[cur]));
+$("#sharedAll").addEventListener("click", () => {
+  state.category = "Todas"; state.limit = PAGE; renderChips(); render(); toListTop();
+});
+
+// ao abrir um link recebido: mostra a peça ou a lista direto, sem a tela inicial, e diz quem enviou
+function skipIntro() {
+  intro.hidden = true; intro.classList.add("leaving");
+  setLocked(false);
+  document.body.classList.add("entered");
+  showBackInStock();
+}
+function applyShared() {
+  const q = new URLSearchParams(location.search);
+  const de = cleanTxt(q.get("de"), 30), m = cleanTxt(q.get("m"), 100);
+  const piece = byId((q.get("peca") || "").trim());
+  const lista = (q.get("lista") || "").split(",").map((s) => s.trim()).filter((id) => byId(id)).slice(0, 40);
+  if (!piece && !lista.length && !de) return;
+  track("Abriu link compartilhado");
+  const recado = m ? ` “${m}”` : "";
+  if (!piece && !lista.length) {
+    if (de) { $("#introFrom").textContent = `✦ ${de} indicou a ${CONFIG.brand} para você`; $("#introFrom").hidden = false; }
+    return;
+  }
+  skipIntro();
+  if (lista.length) {
+    lista.forEach((id) => sharedIds.add(id));
+    state.category = "__shared"; state.limit = PAGE;
+    $("#sharedText").textContent = `${de ? de + " separou" : "Separaram"} ${lista.length === 1 ? "1 peça" : lista.length + " peças"} para você.${recado}`;
+    renderChips(); render();
+    setTimeout(() => $("#catalogo").scrollIntoView(), 0);
+  } else {
+    openSheet(piece.id);
+    $("#sFrom").textContent = `${de ? de + " compartilhou esta peça com você." : "Esta peça foi compartilhada com você."}${recado}`;
+    $("#sFrom").hidden = false;
+  }
+}
+
 /* ---------- eventos ---------- */
 grid.addEventListener("click", (e) => {
   const h = e.target.closest(".heart");
@@ -1419,6 +1602,7 @@ $("#enter").focus({ preventScroll: true });
 
 renderChips();
 render();
+applyShared();
 </script>
 </body>
 </html>
