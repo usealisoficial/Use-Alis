@@ -269,6 +269,83 @@ footer a:not(.cta):hover{color:#fff;text-decoration:underline}
 .toastGo{padding:.5rem .95rem;border:0;background:var(--beige);color:var(--espresso)}
 .toastX{display:grid;place-items:center;width:2rem;height:2rem;padding:0;border:0;background:transparent;color:var(--beige);font-size:1.2rem!important}
 
+/* ===== Mais vida: destaque, faixa, animações e quiz ===== */
+.hero{position:relative;display:grid;gap:1rem;justify-items:start;padding-block:clamp(1rem,4vw,3rem) clamp(2.5rem,7vw,5rem)}
+.heroKicker{margin:0;font:600 .8rem/1 "Bricolage Grotesque",var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.heroTitle{margin:0;font:700 clamp(2.4rem,8.5vw,5.4rem)/.98 "Bricolage Grotesque",var(--sans);letter-spacing:-.045em}
+.rotWrap{display:block;min-height:1.1em}
+.rot{display:inline-block;font:italic 500 1.02em/1.1 var(--serif);letter-spacing:-.02em;background:linear-gradient(100deg,#c9a46a 25%,#f6e6c4 45%,#c9a46a 65%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 3.5s linear infinite}
+.rot.swap{animation:shimmer 3.5s linear infinite,wordIn .55s cubic-bezier(.2,.7,.2,1)}
+@keyframes shimmer{from{background-position:100% 0}to{background-position:-150% 0}}
+@keyframes wordIn{from{opacity:0;transform:translateY(.35em);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+.heroText{margin:0;max-width:44ch;font-size:clamp(1rem,2.3vw,1.15rem);color:rgba(230,228,225,.8)}
+.heroBtns{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:.4rem}
+.heroBtns .cta{margin:0}
+.ctaGhost{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.5rem;border:1px solid rgba(201,164,106,.75);border-radius:999px;background:transparent;color:var(--gold);font:600 1rem var(--sans);cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.ctaGhost:hover{background:var(--gold);color:var(--espresso);transform:translateY(-2px)}
+body.entered .hero>:not(.spark):not(.heroArt){animation:rise .8s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--dl,0s)}
+.spark{position:absolute;z-index:0;width:var(--s);height:var(--s);color:var(--gold);pointer-events:none;opacity:0;animation:twinkle var(--d) ease-in-out infinite;animation-delay:var(--dl)}
+.spark svg{display:block;width:100%;height:100%;fill:currentColor}
+.hero>:not(.spark):not(.heroArt){position:relative;z-index:1}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.3) rotate(0)}50%{opacity:.85;transform:scale(1) rotate(45deg)}}
+
+.heroArt{display:none}
+@media(min-width:900px){
+  .heroArt{display:block;position:absolute;z-index:0;right:4%;top:50%;width:min(34vw,400px);aspect-ratio:1;transform:translateY(-50%);pointer-events:none}
+  .heroArt svg{width:100%;height:100%;overflow:visible;animation:floaty 7s ease-in-out infinite}
+  .heroArt::before{content:"";position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle,rgba(201,164,106,.28),transparent 68%);filter:blur(10px)}
+}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-14px) rotate(4deg)}}
+.ribbon{overflow:hidden;background:var(--gold);color:var(--espresso)}
+.ribbonTrack{display:flex;width:max-content;animation:marquee 30s linear infinite}
+.ribbon:hover .ribbonTrack{animation-play-state:paused}
+.ribbonTrack>span{display:flex;align-items:center;gap:1.4rem;padding:.6rem 1.4rem .6rem 0;white-space:nowrap;font:600 .9rem "Bricolage Grotesque",var(--sans)}
+.ribbonTrack i{font-style:normal;opacity:.6}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+.quizLink{margin:0 0 1rem;padding:.5rem 1rem;border:1px dashed rgba(125,90,43,.55);border-radius:999px;background:rgba(201,164,106,.14);color:var(--cocoa);font:500 .9rem var(--sans);cursor:pointer;transition:background .2s,transform .2s}
+.quizLink:hover{background:rgba(201,164,106,.28);transform:translateY(-1px)}
+.quizLink u{text-underline-offset:3px;font-weight:600}
+
+.item{animation:cardIn .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0) * 45ms)}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.6) 50%,transparent 65%);transform:translateX(-120%);pointer-events:none}
+@media(hover:hover){.card:hover .photo::after{transform:translateX(120%);transition:transform .85s ease}}
+.beat svg{animation:beat .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes beat{0%{transform:scale(1)}35%{transform:scale(1.45)}100%{transform:scale(1.12)}}
+.badge.pop{animation:pop .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes pop{40%{transform:scale(1.55)}}
+.burst{position:fixed;z-index:70;width:7px;height:7px;border-radius:50%;background:var(--c);pointer-events:none}
+.flyDot{position:fixed;left:0;top:0;z-index:70;width:16px;height:16px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(201,164,106,.35);pointer-events:none}
+.snack{position:fixed;left:0;right:0;bottom:calc(max(1rem,env(safe-area-inset-bottom)) + 4.6rem);z-index:15;display:flex;align-items:center;gap:.8rem;width:max-content;max-width:92vw;margin-inline:auto;padding:.55rem .55rem .55rem 1.1rem;background:var(--ink);color:var(--beige);border-radius:999px;box-shadow:0 12px 28px -10px rgba(0,0,0,.5);font-size:.9rem;opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .25s,transform .25s}
+.snack.show{opacity:1;transform:none;pointer-events:auto}
+.snack button{padding:.45rem .9rem;border:0;border-radius:999px;background:var(--gold);color:var(--espresso);font:600 .85rem var(--sans);cursor:pointer}
+.snack button[hidden]{display:none}
+body.hasFav .snack{bottom:calc(max(1rem,env(safe-area-inset-bottom)) + 8.8rem)}
+
+.qBody{display:grid;gap:1rem;padding:1rem 1.25rem calc(1.5rem + env(safe-area-inset-bottom))}
+.qProg{height:6px;border-radius:999px;background:rgba(125,90,43,.15);overflow:hidden}
+.qProg span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--mocha),var(--gold));transition:width .45s cubic-bezier(.2,.7,.2,1)}
+#qStage{display:grid;gap:.9rem}
+#qStage>*{animation:rise .4s cubic-bezier(.2,.7,.2,1) both}
+.qStep{margin:0;font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mocha)}
+.qQ{margin:0;font:700 1.55rem/1.1 "Bricolage Grotesque",var(--sans);letter-spacing:-.03em;outline:none}
+.qOpts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+.qOpt{display:grid;justify-items:center;gap:.4rem;padding:1.05rem .6rem;border:1px solid rgba(125,90,43,.35);border-radius:16px;background:#fff;font:600 .95rem var(--sans);color:var(--ink);cursor:pointer;transition:transform .15s,border-color .2s,box-shadow .2s;animation:cardIn .4s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * 55ms)}
+.qOpt:hover{border-color:var(--gold);box-shadow:0 10px 22px -14px rgba(46,28,0,.5);transform:translateY(-2px)}
+.qOpt:active{transform:scale(.96)}
+.qEmo{font-size:1.9rem;line-height:1}
+.qNote{margin:0;font-size:.9rem;color:var(--mocha)}
+.qRes{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
+.qRes li{display:flex;align-items:center;gap:.5rem;padding:.5rem .55rem;background:#fff;border:1px solid rgba(46,28,0,.1);border-radius:12px;animation:cardIn .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * 80ms)}
+.qPick{flex:1;display:grid;grid-template-columns:3.4rem minmax(0,1fr);align-items:center;gap:.7rem;padding:0;border:0;background:none;text-align:left;font:inherit;color:inherit;cursor:pointer;min-width:0}
+.qPickInfo{display:grid;gap:.1rem;min-width:0}
+.addCart.qAdd{position:relative;top:auto;right:auto;flex:none;width:2.4rem;height:2.4rem;background:var(--linen)}
+.addCart.qAdd[aria-pressed="true"]{background:var(--cocoa)}
+.qActs{display:grid;justify-items:center;gap:.7rem;margin-top:.2rem}
+.qActs .cta{margin:0;border:0;background:var(--cocoa);color:var(--beige)}
+.qActs .cta:hover{background:var(--espresso)}
+
 /* Formas de pagamento (rodapé) */
 footer .pay li{display:flex;align-items:center;gap:.6rem;color:rgba(230,228,225,.85)}
 footer .pay svg{flex:none;width:1.75rem;height:1.75rem;padding:.3rem;border-radius:7px;background:rgba(230,228,225,.12);color:var(--gold)}
@@ -298,13 +375,42 @@ footer .pay svg{flex:none;width:1.75rem;height:1.75rem;padding:.3rem;border-radi
       </a>
       <nav aria-label="Principal"><button type="button" id="reopen">Quem somos</button><a href="#catalogo">Catálogo</a><button type="button" class="cartBtn" data-open-cart aria-label="Carrinho"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="cartLabel">Carrinho</span><span class="badge" data-cart-count hidden>0</span></button></nav>
     </div>
+    <div class="hero" id="hero">
+      <div class="heroArt" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <defs>
+            <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6e6c4"/><stop offset=".45" stop-color="#c9a46a"/><stop offset="1" stop-color="#8a6630"/></linearGradient>
+          </defs>
+          <ellipse cx="100" cy="122" rx="62" ry="58" fill="none" stroke="url(#gold)" stroke-width="12"/>
+          <ellipse cx="100" cy="122" rx="62" ry="58" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2" stroke-dasharray="40 300" stroke-dashoffset="-20"/>
+          <path d="M82 66 100 40 118 66 100 78Z" fill="url(#gold)"/>
+          <path d="M100 40 109 66 100 78 91 66Z" fill="#fff" fill-opacity=".4"/>
+          <path d="M152 30c.8 6.4 5.6 11.2 12 12-6.4.8-11.2 5.6-12 12-.8-6.4-5.6-11.2-12-12 6.4-.8 11.2-5.6 12-12Z" fill="#f6e6c4"/>
+        </svg>
+      </div>
+      <p class="heroKicker">✦ Semijoias Use Alis</p>
+      <h2 class="heroTitle" style="--dl:.08s">Brilho para <span class="rotWrap"><span class="rot" id="rot">o dia a dia</span></span></h2>
+      <p class="heroText" style="--dl:.16s">Escolha suas peças, guarde as favoritas e mande tudo de uma vez no WhatsApp. Simples assim.</p>
+      <div class="heroBtns" style="--dl:.24s">
+        <a class="cta" href="#catalogo">Ver o catálogo</a>
+        <button class="ctaGhost" type="button" data-open-quiz>✦ Descubra sua peça</button>
+      </div>
+    </div>
   </div>
 </header>
+
+<div class="ribbon" aria-label="Pagamento no Pix, crédito ou débito. Atendimento pelo WhatsApp.">
+  <div class="ribbonTrack" aria-hidden="true">
+    <span>Pix, crédito ou débito <i>✦</i> Atendimento de pertinho no WhatsApp <i>✦</i> Acabamento cuidadoso <i>✦</i> Peças para o dia a dia e para presentear <i>✦</i></span>
+    <span>Pix, crédito ou débito <i>✦</i> Atendimento de pertinho no WhatsApp <i>✦</i> Acabamento cuidadoso <i>✦</i> Peças para o dia a dia e para presentear <i>✦</i></span>
+  </div>
+</div>
 
 <main id="catalogo" class="catalog">
   <div class="wrap">
     <h2>Catálogo</h2>
     <p class="lead">Toque em uma peça para ver detalhes. Marque as favoritas e envie todas de uma vez no WhatsApp.</p>
+    <button class="quizLink" type="button" data-open-quiz>✦ Não sabe qual escolher? <u>Faça o quiz</u></button>
     <div class="tools" id="tools">
       <div class="controls">
         <label class="searchBox">
@@ -383,6 +489,19 @@ footer .pay svg{flex:none;width:1.75rem;height:1.75rem;padding:.3rem;border-radi
     <button class="cKeep" id="cartKeep" type="button">Continuar escolhendo</button>
   </div>
 </dialog>
+
+<dialog class="sheet quiz" id="quiz" aria-labelledby="quizTitle">
+  <div class="cHead">
+    <h3 id="quizTitle">Descubra sua peça ✦</h3>
+    <button class="sBtn cClose" id="quizClose" type="button" aria-label="Fechar quiz"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <div class="qBody">
+    <div class="qProg" aria-hidden="true"><span id="qBar"></span></div>
+    <div id="qStage" aria-live="polite"></div>
+  </div>
+</dialog>
+
+<div class="snack" id="snack" role="status" aria-live="polite"><span id="snackText"></span><button type="button" id="snackGo">Ver carrinho</button></div>
 
 <div class="toast" id="toast" role="status" hidden>
   <p id="toastText"></p>
@@ -480,6 +599,8 @@ const cart = new Map((Array.isArray(savedCart) ? savedCart : [])
   .map(([id, v]) => [id, { q: Math.min(99, Math.max(1, Math.round(+v?.q) || 1)), s: v?.s !== false && !outById(id) }]));
 let pay = store.get("ua_pay", "");
 
+let gift = false; // vira true quando a cliente diz no quiz que é presente
+const giftLine = () => (gift ? "É para presente 🎁\n\n" : "");
 const greeting = () => {
   const h = new Date().getHours();
   return h < 12 ? "Bom dia" : h < 18 ? "Boa tarde" : "Boa noite";
@@ -487,7 +608,7 @@ const greeting = () => {
 const waLink = (text) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`;
 const pieceMessage = (p) =>
   `${greeting()}! ✨ Vi a peça *${p.name}* (cód. ${p.id}) no catálogo da ${CONFIG.brand} e me encantei.\n\n` +
-  `Ela está disponível? Pode me passar mais detalhes, como tamanhos e formas de pagamento?\n\n` +
+  `Ela está disponível? Pode me passar mais detalhes, como tamanhos e formas de pagamento?\n\n` + giftLine() +
   `${CONFIG.siteUrl}`;
 const notifyMessage = (p) =>
   `${greeting()}! Vi que a peça *${p.name}* (cód. ${p.id}) está esgotada no catálogo da ${CONFIG.brand}. ` +
@@ -523,8 +644,8 @@ function filtered() {
   return all;
 }
 
-const cardHTML = (p) => `
-  <li class="item">
+const cardHTML = (p, i = 0) => `
+  <li class="item" style="--i:${i % 12}">
     <button type="button" class="card${isOut(p) ? " out" : ""}" data-id="${esc(p.id)}" aria-label="${esc(p.name)}${isOut(p) ? " (esgotada)" : ""}: ver detalhes">
       <span class="photo">${p.img ? `<img src="${esc(p.img)}" alt="${esc(p.name)}" width="600" height="600" loading="lazy" decoding="async">` : placeholder}${isOut(p) ? `<span class="soldTag">Esgotado</span>` : ""}</span>
       <span class="info">
@@ -643,7 +764,7 @@ sheet.addEventListener("keydown", (e) => {
 $("#sClose").addEventListener("click", () => sheet.close());
 $("#sPrev").addEventListener("click", () => showPiece(cur - 1));
 $("#sNext").addEventListener("click", () => showPiece(cur + 1));
-$("#sFav").addEventListener("click", () => toggleFav(view[cur].id));
+$("#sFav").addEventListener("click", (e) => favWithFx(view[cur].id, e.currentTarget));
 // atualiza a saudação (bom dia/tarde/noite) no momento do clique
 $("#sAsk").addEventListener("click", (e) => { e.currentTarget.href = waLink(askMessage(view[cur])); });
 $("#favSend").addEventListener("click", (e) => { e.currentTarget.href = waLink(favMessage()); });
@@ -667,8 +788,13 @@ const cartCount = () => [...cart.values()].reduce((t, v) => t + v.q, 0);
 const selectedItems = () => [...cart].filter(([id, v]) => v.s && !outById(id)).map(([id, v]) => ({ p: byId(id), q: v.q }));
 const availableEntries = () => [...cart].filter(([id]) => !outById(id));
 
+let lastCount = null;
 function updateCartBadges() {
   const n = cartCount();
+  if (lastCount != null && n > lastCount) setTimeout(() => document.querySelectorAll("[data-cart-count]").forEach((b) => {
+    b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop");
+  }), 550);
+  lastCount = n;
   document.querySelectorAll("[data-cart-count]").forEach((b) => { b.textContent = n; b.hidden = n === 0; });
   document.querySelectorAll("[data-open-cart]").forEach((b) =>
     b.setAttribute("aria-label", n ? `Carrinho: ${n} ${n === 1 ? "item" : "itens"}` : "Carrinho vazio"));
@@ -705,7 +831,7 @@ function cartMessage() {
   const hasPrice = items.some(({ p }) => p.price != null);
   return `${greeting()}! ✨ Montei meu carrinho no catálogo da ${CONFIG.brand}:\n\n${lines}\n\n` +
     (hasPrice ? `*Total: ${money.format(total)}*\n` : "") +
-    `Forma de pagamento: ${pay || "a combinar"}\n\n` +
+    `Forma de pagamento: ${pay || "a combinar"}\n\n` + giftLine() +
     `As peças estão disponíveis? Como faço para finalizar o pedido?\n\n${CONFIG.siteUrl}`;
 }
 
@@ -806,7 +932,9 @@ $("#cartSend").addEventListener("click", (e) => {
 });
 $("#sCart").addEventListener("click", () => {
   const id = view[cur].id;
-  cart.has(id) ? openCart() : addToCart(id);
+  if (cart.has(id)) return openCart();
+  const r = $("#sCart").getBoundingClientRect();
+  addToCart(id); flyToCart(r); snack(isOut(view[cur]) ? "Guardada no carrinho" : "Adicionada ao carrinho ✓", openCart);
 });
 
 /* ---------- voltou ao estoque ---------- */
@@ -842,12 +970,189 @@ $("#toastGo").addEventListener("click", () => {
   state.category = "__fav"; state.limit = PAGE; renderChips(); render(); toListTop();
 });
 
+/* ---------- efeitos (coração, carrinho, avisos) ---------- */
+const calm = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+function burst(r, colors = ["#e0607a", "#c9a46a", "#b4233c"], count = 10, spread = 26) {
+  if (calm()) return;
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  for (let i = 0; i < count; i++) {
+    const d = document.createElement("span");
+    d.className = "burst";
+    d.style.left = `${cx}px`; d.style.top = `${cy}px`;
+    d.style.setProperty("--c", colors[i % colors.length]);
+    document.body.appendChild(d);
+    const a = (Math.PI * 2 * i) / count + Math.random() * 0.4, dist = spread + Math.random() * spread;
+    d.animate([
+      { transform: "translate(-50%,-50%) scale(1)", opacity: 1 },
+      { transform: `translate(calc(-50% + ${Math.cos(a) * dist}px), calc(-50% + ${Math.sin(a) * dist}px)) scale(.2)`, opacity: 0 }
+    ], { duration: 600 + Math.random() * 250, easing: "cubic-bezier(.2,.7,.2,1)" }).onfinish = () => d.remove();
+  }
+}
+function cartTarget() {
+  return [...document.querySelectorAll("[data-open-cart]")].map((el) => el.getBoundingClientRect())
+    .find((b) => b.width && b.top >= 0 && b.bottom <= innerHeight);
+}
+function flyToCart(r) {
+  const t = cartTarget();
+  if (calm() || !t) return;
+  const d = document.createElement("span");
+  d.className = "flyDot";
+  document.body.appendChild(d);
+  const x0 = r.left + r.width / 2 - 8, y0 = r.top + r.height / 2 - 8;
+  const x1 = t.left + t.width / 2 - 8, y1 = t.top + t.height / 2 - 8;
+  d.animate([
+    { transform: `translate(${x0}px,${y0}px) scale(1)` },
+    { transform: `translate(${(x0 + x1) / 2}px,${Math.min(y0, y1) - 70}px) scale(1.25)`, offset: 0.5 },
+    { transform: `translate(${x1}px,${y1}px) scale(.35)`, opacity: 0.5 }
+  ], { duration: 700, easing: "cubic-bezier(.5,0,.3,1)" }).onfinish = () => d.remove();
+}
+let snackT, snackAct = null;
+function snack(msg, action = null, label = "Ver carrinho") {
+  $("#snackText").textContent = msg;
+  const b = $("#snackGo");
+  b.hidden = !action; b.textContent = label; snackAct = action;
+  $("#snack").classList.add("show");
+  clearTimeout(snackT);
+  snackT = setTimeout(() => $("#snack").classList.remove("show"), 2800);
+}
+$("#snackGo").addEventListener("click", () => { $("#snack").classList.remove("show"); snackAct?.(); });
+
+function favWithFx(id, el) {
+  const adding = !favs.has(id);
+  const r = el.getBoundingClientRect();
+  toggleFav(id);
+  if (!adding) return;
+  burst(r);
+  document.querySelectorAll(`[data-fav="${CSS.escape(id)}"], #sFav`).forEach((b) => {
+    b.classList.remove("beat"); void b.offsetWidth; b.classList.add("beat");
+  });
+  snack("Salva nas favoritas ♥");
+}
+function cartWithFx(btn) {
+  const id = btn.dataset.cart, adding = !cart.has(id);
+  const r = btn.getBoundingClientRect();
+  toggleCart(id);
+  if (adding) { flyToCart(r); snack(outById(id) ? "Guardada no carrinho" : "Adicionada ao carrinho ✓", openCart); }
+}
+
+/* ---------- destaque: palavras que trocam + brilhos ---------- */
+const WORDS = ["o dia a dia", "o trabalho", "aquele date", "presentear", "você"];
+let wi = 0;
+setInterval(() => {
+  if (document.hidden) return;
+  const rot = $("#rot");
+  wi = (wi + 1) % WORDS.length;
+  rot.textContent = WORDS[wi];
+  rot.classList.remove("swap"); void rot.offsetWidth; rot.classList.add("swap");
+}, 2600);
+const starSVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.8 6.4 5.6 11.2 12 12-6.4.8-11.2 5.6-12 12-.8-6.4-5.6-11.2-12-12C6.4 11.2 11.2 6.4 12 0Z"/></svg>`;
+const SPARKS = [[8, 12, 14], [88, 8, 18], [72, 30, 10], [94, 55, 14], [60, 78, 12], [35, 90, 9], [82, 88, 16], [50, 6, 8], [20, 70, 11], [97, 25, 9]];
+$("#hero").insertAdjacentHTML("beforeend", SPARKS.map(([x, y, s], i) =>
+  `<span class="spark" style="left:${x}%;top:${y}%;--s:${s}px;--d:${2.6 + (i % 4) * 0.7}s;--dl:${(i * 0.37) % 3}s">${starSVG}</span>`).join(""));
+
+/* ---------- quiz "Descubra sua peça" ---------- */
+const quiz = $("#quiz");
+const catEmoji = { "Anéis": "💍", "Brincos": "✨", "Colares": "📿", "Pulseiras": "🌸" };
+const QUESTIONS = [
+  { key: "cat", q: "Que peça você está procurando?", opts: () =>
+      [...new Set(PIECES.map((p) => p.category))].map((c) => ({ v: c, l: c, e: catEmoji[c] || "✦" }))
+        .concat({ v: "*", l: "Surpreenda-me", e: "🎲" }) },
+  { key: "max", q: "Quanto quer investir?", opts: () => [
+      { v: 50, l: "Até R$ 50", e: "💸" }, { v: 80, l: "Até R$ 80", e: "💳" }, { v: Infinity, l: "Tanto faz", e: "💛" }] },
+  { key: "gift", q: "É para quem?", opts: () => [
+      { v: false, l: "Pra mim", e: "💁‍♀️" }, { v: true, l: "Presente", e: "🎁" }] }
+];
+let qStep = 0, qAns = {}, qOpts = [];
+
+function quizPicks() {
+  const inStock = PIECES.filter((p) => !isOut(p));
+  let pool = inStock.filter((p) => qAns.cat === "*" || p.category === qAns.cat), note = "";
+  if (!pool.length) { pool = inStock; note = "Essa categoria esgotou por enquanto 😢 Mas olha estas:"; }
+  let picks = pool.filter((p) => p.price == null || p.price <= qAns.max);
+  if (!picks.length) { picks = [...pool].sort((a, b) => (a.price ?? 0) - (b.price ?? 0)); note = note || "Nenhuma dentro desse valor, mas estas chegam pertinho:"; }
+  else if (qAns.cat === "*") picks.sort(() => Math.random() - 0.5);
+  else picks.sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
+  return { picks: picks.slice(0, 4), note };
+}
+
+function renderQuiz() {
+  const stage = $("#qStage");
+  $("#qBar").style.width = `${(Math.min(qStep, QUESTIONS.length) / QUESTIONS.length) * 100}%`;
+  if (qStep >= QUESTIONS.length) {
+    gift = qAns.gift === true;
+    const { picks, note } = quizPicks();
+    stage.innerHTML = `
+      <p class="qStep">Prontinho!</p>
+      <h4 class="qQ" tabindex="-1">${gift ? "Presentes que vão encantar 🎁" : "Separamos estas para você ✨"}</h4>
+      ${note ? `<p class="qNote">${esc(note)}</p>` : ""}
+      <ul class="qRes">${picks.map((p, i) => `
+        <li style="--i:${i}">
+          <button type="button" class="qPick" data-pick="${esc(p.id)}">
+            <span class="cThumb">${p.img ? `<img src="${esc(p.img)}" alt="" loading="lazy">` : placeholder}</span>
+            <span class="qPickInfo"><span class="cName">${esc(p.name)}</span>${p.price != null ? `<span class="cPrice">${money.format(p.price)}</span>` : ""}</span>
+          </button>
+          <button type="button" class="addCart qAdd" data-cart="${esc(p.id)}" aria-pressed="${cart.has(p.id)}" aria-label="${cart.has(p.id) ? "Tirar do" : "Colocar no"} carrinho: ${esc(p.name)}">${bagIcon}</button>
+        </li>`).join("")}</ul>
+      <div class="qActs">
+        <button type="button" class="cta qMore">Ver mais no catálogo</button>
+        <button type="button" class="cKeep qRedo">Refazer o quiz</button>
+      </div>`;
+    const h = stage.querySelector(".qQ");
+    h.focus({ preventScroll: true });
+    setTimeout(() => burst(h.getBoundingClientRect(), ["#c9a46a", "#f6e6c4", "#7d5a2b"], 16, 60), 150);
+    return;
+  }
+  const Q = QUESTIONS[qStep];
+  qOpts = Q.opts();
+  stage.innerHTML = `
+    <p class="qStep">Pergunta ${qStep + 1} de ${QUESTIONS.length}</p>
+    <h4 class="qQ" tabindex="-1">${esc(Q.q)}</h4>
+    <div class="qOpts">${qOpts.map((o, i) =>
+      `<button type="button" class="qOpt" data-opt="${i}" style="--i:${i}"><span class="qEmo" aria-hidden="true">${o.e}</span>${esc(o.l)}</button>`).join("")}</div>
+    ${qStep ? `<button type="button" class="cKeep qBack">← Voltar</button>` : ""}`;
+  stage.querySelector(".qQ").focus({ preventScroll: true });
+}
+
+function openQuiz() {
+  qStep = 0; qAns = {};
+  renderQuiz();
+  if (!quiz.open) { quiz.showModal(); document.body.classList.add("noscroll"); }
+}
+quiz.addEventListener("close", () => { if (!sheet.open && !cartDlg.open) document.body.classList.remove("noscroll"); });
+quiz.addEventListener("click", (e) => { if (e.target === quiz) quiz.close(); });
+$("#quizClose").addEventListener("click", () => quiz.close());
+document.querySelectorAll("[data-open-quiz]").forEach((b) => b.addEventListener("click", openQuiz));
+
+$("#qStage").addEventListener("click", (e) => {
+  const opt = e.target.closest(".qOpt");
+  if (opt) { qAns[QUESTIONS[qStep].key] = qOpts[+opt.dataset.opt].v; qStep++; return renderQuiz(); }
+  if (e.target.closest(".qBack")) { qStep--; return renderQuiz(); }
+  if (e.target.closest(".qRedo")) return openQuiz();
+  const add = e.target.closest(".qAdd");
+  if (add) return cartWithFx(add);
+  const pick = e.target.closest(".qPick");
+  if (pick) {
+    quiz.close();
+    Object.assign(state, { category: "Todas", query: "", sort: "default", limit: PIECES.length });
+    $("#search").value = ""; $("#sort").value = "default";
+    renderChips(); render(); openSheet(pick.dataset.pick);
+    return;
+  }
+  if (e.target.closest(".qMore")) {
+    quiz.close();
+    Object.assign(state, { category: qAns.cat === "*" ? "Todas" : qAns.cat, query: "", sort: "asc", limit: PAGE });
+    $("#search").value = ""; $("#sort").value = "asc";
+    renderChips(); render();
+    $("#catalogo").scrollIntoView({ behavior: "smooth" });
+  }
+});
+
 /* ---------- eventos ---------- */
 grid.addEventListener("click", (e) => {
   const h = e.target.closest(".heart");
-  if (h) return toggleFav(h.dataset.fav);
+  if (h) return favWithFx(h.dataset.fav, h);
   const a = e.target.closest(".addCart");
-  if (a) return toggleCart(a.dataset.cart);
+  if (a) return cartWithFx(a);
   const c = e.target.closest(".card");
   if (c) openSheet(c.dataset.id);
 });
@@ -917,7 +1222,8 @@ const setLocked = (locked) => {
 function enterCatalog() {
   if (intro.classList.contains("leaving")) return;
   setLocked(false);
-  $("#catalogo").scrollIntoView({ behavior: "instant" });
+  scrollTo({ top: 0, behavior: "instant" });
+  document.body.classList.add("entered");
   intro.classList.add("leaving");
   setTimeout(() => { intro.hidden = true; showBackInStock(); }, reduceMotion.matches ? 0 : 900);
 }
