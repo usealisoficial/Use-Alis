@@ -10,12 +10,17 @@
 <meta property="og:title" content="Use Alis · Catálogo de semijoias">
 <meta property="og:description" content="Escolha sua peça e fale direto com a gente pelo WhatsApp.">
 <meta property="og:locale" content="pt_BR">
-<!-- Prévia do link no WhatsApp/Instagram: quando o site tiver endereço, tire os comentários abaixo,
-     troque SEU-SITE.com.br pelo endereço real e publique o og-image.png junto com este arquivo.
-<meta property="og:image" content="https://SEU-SITE.com.br/og-image.png">
-<meta property="og:url" content="https://SEU-SITE.com.br/">
+<meta property="og:site_name" content="Use Alis">
+<meta property="og:url" content="https://usealisoficial.github.io/Use-Alis/">
+<meta property="og:image" content="https://usealisoficial.github.io/Use-Alis/og-image.png?v=2">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Use Alis · Catálogo de semijoias">
 <meta name="twitter:card" content="summary_large_image">
--->
+<meta name="twitter:title" content="Use Alis · Catálogo de semijoias">
+<meta name="twitter:description" content="Escolha sua peça e fale direto com a gente pelo WhatsApp.">
+<meta name="twitter:image" content="https://usealisoficial.github.io/Use-Alis/og-image.png?v=2">
 
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -697,7 +702,7 @@ const CONFIG = {
   whatsapp: "5521994495491",         // DDI + DDD + número, só dígitos
   // Endereço final do site, ex.: "https://usealis.com.br". Vai nos links de compartilhamento e nas mensagens do WhatsApp.
   // Enquanto estiver vazio, usa o endereço da página aberta (que só serve depois de publicado).
-  endereco: "",
+  endereco: "https://usealisoficial.github.io/Use-Alis/",
   // Faixa de promoção no topo do site. Para ligar: ativa: true e escreva o texto (link é opcional).
   promo: { ativa: false, texto: "Promoção da semana: confira as peças com preço especial!", link: "" },
   // Contagem de visitas e cliques (opcional, deixe vazio para desligar).
@@ -1397,7 +1402,7 @@ function shareText(url) {
     const ps = shareIds(shareWhat).map(byId);
     head = `Separei ${ps.length === 1 ? "esta peça" : ps.length + " peças"} da ${brand} para você olhar:\n` +
       ps.slice(0, 6).map((p) => `• ${p.name}`).join("\n") + (ps.length > 6 ? `\ne mais ${ps.length - 6}` : "");
-  } else head = `Olha o catálogo de semijoias da ${brand}! ✨`;
+  } else head = `Olha o catálogo de semijoias da ${brand}!`;
   const note = cleanTxt($("#shareNote").value, 100);
   return [head, note, url].filter(Boolean).join("\n\n");
 }
